@@ -1,0 +1,463 @@
+<div id="carouselExampleAutoplaying" class="carousel slide d-none d-lg-block" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="assets/images/coffee_5.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>CÀ PHÊ TƯƠI</h5>
+        <p>100% được nhập khẩu chính hãng</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="assets/images/coffee_3.jpg"
+           class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>NGUYÊN CHẤT</h5>
+        <p>Cà phê có màu nâu đặc trưng, không đậm đặc!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="assets/images/coffee_6.jpg"
+        class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>TUYỆT VỜI</h5>
+        <p>Càm giác trong thanh hòa quyện vào đầu lưỡi, đôi môi</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="container-fluid tera">
+  <div class="tera-content mx-auto container p-4">
+    <h3 class="display-4 me-5 text-center">Khởi Đầu Ngày Mới<br>
+      <span>Với Hương Vị Tuyệt Vời</span>
+    </h3>
+    <h4 class="dísplay-3 mt-5">TÌM VỀ HƯƠNG VỊ CÀ PHÊ TRUYỀN THỐNG</h4>
+    <p class="display-5 mt-3 me-5 text-justify"><i>
+      Cà phê, không cần phải nói nhiều, là món đồ uống truyền thống, xuất hiện nhiều nhất trong thực đơn các
+      cửa hàng giải khát ở Việt Nam. Những đen đá, nâu, bạc xỉu… là món thức uống cửa miệng của dân mình.
+      Nhưng tự lúc nào, người Việt Nam không còn nhớ tới mùi vị nguyên thủy của ly cà phê, cái vị không thực
+      nồng, không thô bạo, nhưng dịu dàng lưu luyến, vị đắng dịu, chua thanh sâu lắng tự nhiên. Thay vào đó
+      người ta uống thứ thức uống có vị cà phê. Uống cà phê không vì thưởng thức hương vị của nó mà là để mua
+      một chỗ ngồi nơi tụ tập với các chiến hữu.</i>
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="bg-white">
+    <section class="section-1">
+      <div class="container">
+        <div class="collection">
+          <a href="">
+            <picture>
+              <source media="(min-width: 768px)" srcset="//bizweb.dktcdn.net/100/440/464/themes/839921/assets/feature_banner.jpg?1693361597588">
+              <source media="(max-width: 767px)" srcset="//bizweb.dktcdn.net/100/440/464/themes/839921/assets/feature_banner_mb.jpg?1693361597588">
+              <img class="lazy loaded" height="200" width="1600" data-src="//bizweb.dktcdn.net/100/440/464/themes/839921/assets/feature_banner.jpg?1693361597588" alt="Duck Mart" src="//bizweb.dktcdn.net/100/440/464/themes/839921/assets/feature_banner.jpg?1693361597588" data-was-processed="true">
+            </picture>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class=section-2>
+      <div class="container">
+        <div class="bg-white">
+          <div class="row">
+            <div class="d-none d-lg-block col-lg-3 col-md-6">
+              <a href="">
+                <picture>
+                  <source media="(min-width: 768px)" srcset="/assets/images/coffee_1.jpg">
+                  <source media="(max-width: 767px)" srcset="/assets/images/coffee_1.jpg">
+                  <img class="lazy loaded"  alt="Coffee Store - We live coffee" src="/assets/images/coffee_1.jpg" data-was-processed="true">
+                </picture>
+              </a>
+            </div>
+            <div *ngIf="isLatestProductsLoading">
+              <mat-spinner color="primary"></mat-spinner>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <a href=""  class="section-title">Sản phẩm mới</a>
+              <div *ngIf="isLatestProductsLoading" class="d-flex justify-content-center">
+                <mat-spinner color="primary"></mat-spinner>
+              </div>
+              <ng-container *ngIf="!isLatestProductsLoading">
+                <div *ngFor="let p of latestProducts" class="item-content">
+                  <div class="product-block">
+                    <a [routerLink]="['/product', p.slug]" class="product-image">
+                      <img [src]="p.images[0].url" alt="{{p.name}}">
+                    </a>
+                    <div class="product-right">
+                      <a [routerLink]="['/product', p.slug]" class="product-name">{{p.name}}</a>
+                      <div class="product-price">
+                        <span class="price">{{ p.productDetails[0].price | currencyVND}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <a href=""  class="section-title">Sản phẩm bán chạy</a>
+              <div *ngIf="isBestSellerProductsLoading" class="d-flex justify-content-center">
+                <mat-spinner color="primary"></mat-spinner>
+              </div>
+              <ng-container *ngIf="!isBestSellerProductsLoading">
+                <div *ngFor="let p of bestSellerProducts" class="item-content">
+                  <div class="product-block">
+                    <a [routerLink]="['/product', p.slug]" class="product-image">
+                      <img [src]="p.images[0].url" alt="{{p.name}}">
+                    </a>
+                    <div class="product-right">
+                      <a [routerLink]="['/product', p.slug]" class="product-name">{{p.name}}</a>
+                      <div class="product-price">
+                        <span class="price">{{p.productDetails[0].price | currencyVND}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <a [routerLink]="'/collection/special-coffee' | spaceToDash"  class="section-title">Hộp quà tặng</a>
+              <div *ngIf="isSpecialProductsLoading" class="d-flex justify-content-center">
+                <mat-spinner color="primary"></mat-spinner>
+              </div>
+              <ng-container *ngIf="!isSpecialProductsLoading">
+                <div *ngFor="let p of specialProducts" class="item-content">
+                  <div class="product-block">
+                    <a [routerLink]="['/product', p.slug]" class="product-image">
+                      <img [src]="p.images[0].url" alt="{{p.name}}">
+                    </a>
+                    <div class="product-right">
+                      <a [routerLink]="['/product', p.slug]" class="product-name">{{p.name}}</a>
+                      <div class="product-price">
+                        <span class="price">{{p.productDetails[0].price | currencyVND}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<ng-container *ngIf="recommendProducts.length > 0">
+  <div class="container">
+    <div class="product-main">
+      <div class="row group-title">
+        <div class="col-lg-6 col-md-12 col-12">
+          <a class="title-3" [routerLink]="'/collection/all' | spaceToDash" >
+            <img src="assets/images/recommended.png" alt="colombia">
+<!--            <mat-icon fontIcon="recommend"></mat-icon>-->
+           Đề xuất cho bạn
+          </a>
+          <p>Dựa trên lịch sử mua hàng của bạn và những người khác!</p>
+        </div>
+        <div class="col-lg-6 col-md-12 col-12 menu"></div>
+      </div>
+
+      <div *ngIf="isRecommendProductsLoading" class="d-flex justify-content-center">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
+      <ng-container *ngIf="!isRecommendProductsLoading" class="texture">
+        <swiper-container class="texture"
+                          navigation="true"
+                          [slidesPerView]="slidesPerView"
+        >
+          <swiper-slide *ngFor="let p of recommendProducts; let i = index" class="col-lg-15 col-md-15 col-sm 4 col-6 px-3">
+            <div class="block-item">
+              <button (click)="handleWishlist(p)" class="btn-wishlist" #btnWishlist>
+                <mat-icon *ngIf="checkExist(isWishlist, p); else unFavorite" class="active-wishlist" fontIcon="favorite"></mat-icon>
+                <ng-template #unFavorite>
+                  <mat-icon fontIcon="favorite_border"></mat-icon>
+                </ng-template>
+              </button>
+              <form [formGroup]="cartItemForm" (ngSubmit)="addToCart(p)">
+                <a [routerLink]="['/product', p.slug]" class="product-transition">
+                  <img [src]="p.images[0].url" alt="">
+                </a>
+                <div class="product-info">
+                  <a [routerLink]="['/product', p.slug]" class="product-name">
+                    {{p.name}}
+                  </a>
+                  <div class="product-reviews">
+                    <div class="product-reviews-star">
+                      <ng-container *ngIf="p.rating > 0; else starsOff">
+                        <i *ngFor="let star of calcStars(p.rating)" class="fas fa-star text-warning star-off"></i>
+                        <i *ngFor="let star of calcStars(5-p.rating)" class="far fa-star text-warning star-off"></i>
+                      </ng-container>
+                      <ng-template #starsOff>
+                        <ng-container *ngIf="p.rating > 0; else starsOff">
+                          <i *ngFor="let star of calcStars(p.rating)" class="fas fa-star text-warning star-off"></i>
+                          <i *ngFor="let star of calcStars(5-p.rating)" class="far fa-star text-warning star-off"></i>
+                        </ng-container>
+                        <ng-template #starsOff>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                        </ng-template>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="product-price mt-1">
+                    <span class="price">{{p.productDetails[0].price | currencyVND}}</span>
+                    <!--                      <span class="old-price">{{p.productDetails[0].price * 1.5 | currencyVND}}</span>-->
+                  </div>
+                </div>
+                <button class="cart-button" type="submit">Thêm vào giỏ</button>
+              </form>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </ng-container>
+    </div>
+  </div>
+
+</ng-container>
+
+
+
+
+
+<div class="container">
+  <div class="product-main">
+    <div class="row group-title">
+      <div class="col-lg-6 col-md-12 col-12">
+        <a class="title-1" [routerLink]="'/collection/americas-coffee' | spaceToDash">
+          <img src="assets/images/colombia.png" alt="colombia">
+          COLOMBIA STARTER PACKS
+        </a>
+        <p>Trải nghiệm hương vị từ những nông trại ở Colombia</p>
+      </div>
+      <div class="col-lg-6 col-md-12 col-12 menu"></div>
+    </div>
+
+      <div *ngIf="isTop10ColombiaProductsLoading" class="d-flex justify-content-center">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
+      <ng-container *ngIf="!isTop10ColombiaProductsLoading" class="texture">
+        <swiper-container class="texture"
+          navigation="true"
+          [slidesPerView]="slidesPerView"
+        >
+          <swiper-slide *ngFor="let p of top10ColombiaProducts; let i = index" class="col-lg-15 col-md-15 col-sm 4 col-6 px-3">
+              <div class="block-item">
+                <button (click)="handleWishlist(p)" class="btn-wishlist" #btnWishlist>
+                  <mat-icon *ngIf="checkExist(isWishlist, p); else unFavorite" class="active-wishlist" fontIcon="favorite"></mat-icon>
+                  <ng-template #unFavorite>
+                    <mat-icon fontIcon="favorite_border"></mat-icon>
+                  </ng-template>
+                </button>
+                <form [formGroup]="cartItemForm" (ngSubmit)="addToCart(p)">
+                  <a [routerLink]="['/product', p.slug]" class="product-transition">
+                    <img [src]="p.images[0].url" alt="">
+                  </a>
+                  <div class="product-info">
+                    <a [routerLink]="['/product', p.slug]" class="product-name">
+                      {{p.name}}
+                    </a>
+                    <div class="product-reviews">
+                      <div class="product-reviews-star">
+                        <ng-container *ngIf="p.rating > 0; else starsOff">
+                          <i *ngFor="let star of calcStars(p.rating)" class="fas fa-star text-warning star-off"></i>
+                          <i *ngFor="let star of calcStars(5-p.rating)" class="far fa-star text-warning star-off"></i>
+                        </ng-container>
+                        <ng-template #starsOff>
+                          <ng-container *ngIf="p.rating > 0; else starsOff">
+                            <i *ngFor="let star of calcStars(p.rating)" class="fas fa-star text-warning star-off"></i>
+                            <i *ngFor="let star of calcStars(5-p.rating)" class="far fa-star text-warning star-off"></i>
+                          </ng-container>
+                          <ng-template #starsOff>
+                            <i class="far fa-star text-warning star-off"></i>
+                            <i class="far fa-star text-warning star-off"></i>
+                            <i class="far fa-star text-warning star-off"></i>
+                            <i class="far fa-star text-warning star-off"></i>
+                            <i class="far fa-star text-warning star-off"></i>
+                          </ng-template>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="product-price mt-1">
+                      <span class="price">{{p.productDetails[0].price | currencyVND}}</span>
+<!--                      <span class="old-price">{{p.productDetails[0].price * 1.5 | currencyVND}}</span>-->
+                    </div>
+                  </div>
+                  <button class="cart-button" type="submit">Thêm vào giỏ</button>
+                </form>
+              </div>
+          </swiper-slide>
+        </swiper-container>
+      </ng-container>
+    </div>
+</div>
+
+<div class="container">
+  <div class="product-main">
+    <div class="row group-title">
+      <div class="col-lg-6 col-md-12 col-12">
+        <a class="title-2" [routerLink]="'/collection/roasted-bean-coffee'">
+          <img src="assets/images/roasted_bean.png" alt="bean">
+          ROASTED COFFEE BEANS FOR YOU
+        </a>
+      </div>
+      <div class="col-lg-6 col-md-12 col-12 menu"></div>
+    </div>
+    <div *ngIf="isTop10RoastedProductsLoading" class="d-flex justify-content-center">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+    <ng-container *ngIf="!isTop10RoastedProductsLoading">
+      <div class="row texture">
+        <div *ngFor="let p of top10RoastedProducts; let i = index" class="col-lg-15 col-md-15 col-sm 4 col-6">
+            <div class="block-item">
+<!--              <button (click)="handleWishlist(p)" class="btn-wishlist">-->
+<!--                  <svg-->
+<!--                    fill="#000000" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 471.701 471.701" xml:space="preserve" stroke="#000000">-->
+<!--                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>-->
+<!--                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>-->
+<!--                    <g id="SVGRepo_iconCarrier">-->
+<!--                              <g>-->
+<!--                                <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1 c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3 l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4 C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3 s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4 c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3 C444.801,187.101,434.001,213.101,414.401,232.701z"></path>-->
+<!--                              </g>-->
+<!--                            </g>-->
+<!--                          </svg>-->
+<!--                </button>-->
+              <button (click)="handleWishlist(p)" class="btn-wishlist" #btnWishlist>
+                <mat-icon *ngIf="checkExist(isWishlist, p); else unFavorite" class="active-wishlist" fontIcon="favorite"></mat-icon>
+                <ng-template #unFavorite>
+                  <mat-icon fontIcon="favorite_border"></mat-icon>
+                </ng-template>
+              </button>
+              <form [formGroup]="cartItemForm" (ngSubmit)="addToCart(p)">
+                <a [routerLink]="['/product', p.slug]" class="product-transition">
+                  <img [src]="p.images[0].url" alt="">
+                </a>
+                <div class="product-info">
+                  <a [routerLink]="['/product', p.slug]" class="product-name">
+                    {{p.name}}
+                  </a>
+                  <div class="product-reviews">
+                    <div class="product-reviews-star">
+                      <ng-container *ngIf="p.rating > 0; else starsOff">
+                        <i *ngFor="let star of calcStars(p.rating)" class="fas fa-star text-warning star-off"></i>
+                        <i *ngFor="let star of calcStars(5-p.rating)" class="far fa-star text-warning star-off"></i>
+                      </ng-container>
+                      <ng-template #starsOff>
+                        <i class="far fa-star text-warning star-off"></i>
+                        <i class="far fa-star text-warning star-off"></i>
+                        <i class="far fa-star text-warning star-off"></i>
+                        <i class="far fa-star text-warning star-off"></i>
+                        <i class="far fa-star text-warning star-off"></i>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="product-price mt-1">
+                    <span class="price">{{p.productDetails[0].price | currencyVND}}</span>
+                    <span class="old-price">1.200.000đ</span>
+                  </div>
+                </div>
+                <button class="cart-button" type="submit">Thêm vào giỏ</button>
+              </form>
+            </div>
+        </div>
+      </div>
+      <div class="view-more text-center">
+        <a [routerLink]="'/collection/roasted-bean-coffee'">Xem tất cả các loại cà phê hạt đã rang</a>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="product-main">
+    <div class="row group-title">
+      <div class="col-lg-6 col-md-12 col-12">
+        <a class="title-1" [routerLink]="'/collection/bottled-coffee'">
+          <img src="assets/images/coffee_cup.png" alt="coffee_cup">
+          <span style="color: coral;">Bottled Coffee </span> / <span style="color: cadetblue;">Ready to drink</span>
+        </a>
+      </div>
+      <div class="col-lg-6 col-md-12 col-12 menu"></div>
+    </div>
+      <div *ngIf="isTop10BottledProductsLoading" class="d-flex justify-content-center">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
+    <div *ngIf="!isTop10BottledProductsLoading" class="texture">
+        <swiper-container
+          navigation="true"
+          [slidesPerView]="slidesPerView"
+        >
+          <swiper-slide *ngFor="let p of top10BottledProducts; let i = index" class="col-lg-15 col-md-15 col-sm 4 col-6 px-3">
+              <div class="block-item">
+<!--                  <button (click)="handleWishlist(p)" class="btn-wishlist">-->
+<!--                    <svg-->
+<!--                      fill="#000000" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 471.701 471.701" xml:space="preserve" stroke="#000000">-->
+<!--                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>-->
+<!--                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>-->
+<!--                      <g id="SVGRepo_iconCarrier">-->
+<!--                              <g>-->
+<!--                                <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1 c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3 l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4 C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3 s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4 c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3 C444.801,187.101,434.001,213.101,414.401,232.701z"></path>-->
+<!--                              </g>-->
+<!--                            </g>-->
+<!--                          </svg>-->
+<!--                  </button>-->
+                <button (click)="handleWishlist(p)" class="btn-wishlist" #btnWishlist>
+                  <mat-icon *ngIf="checkExist(isWishlist, p); else unFavorite" class="active-wishlist" fontIcon="favorite"></mat-icon>
+                  <ng-template #unFavorite>
+                    <mat-icon fontIcon="favorite_border"></mat-icon>
+                  </ng-template>
+                </button>
+                <form [formGroup]="cartItemForm" (ngSubmit)="addToCart(p)">
+                  <a [routerLink]="['/product', p.slug]" class="product-transition">
+                    <img [src]="p.images[0].url" alt="">
+                  </a>
+                  <div class="product-info">
+                    <a [routerLink]="['/product', p.slug]" class="product-name">
+                      {{p.name}}
+                    </a>
+                    <div class="product-reviews">
+                      <div class="product-reviews-star">
+                        <ng-container *ngIf="p.rating > 0; else starsOff">
+                          <i *ngFor="let star of calcStars(p.rating)" class="fas fa-star text-warning star-off"></i>
+                          <i *ngFor="let star of calcStars(5-p.rating)" class="far fa-star text-warning star-off"></i>
+                        </ng-container>
+                        <ng-template #starsOff>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                          <i class="far fa-star text-warning star-off"></i>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="product-price mt-1">
+                      <span class="price">{{p.productDetails[0].price | currencyVND}}</span>
+                      <span class="old-price">{{(p.productDetails[0].price*1.5) | currencyVND}}</span>
+                    </div>
+                  </div>
+                  <button class="cart-button" type="submit">Thêm vào giỏ</button>
+                </form>
+              </div>
+          </swiper-slide>
+        </swiper-container>
+    </div>
+  </div>
+</div>

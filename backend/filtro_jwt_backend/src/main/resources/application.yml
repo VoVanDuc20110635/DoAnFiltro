@@ -1,0 +1,38 @@
+spring:
+  config:
+    import: secret.yml
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/filtro_jwt
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: phutv1990@gmail.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
+
+
+application:
+  security:
+    jwt:
+      secret-key: f2f1035db6a255e7885838b020f370d702d4bb0f35a368f06ded1ce8e6684a27
+#      expiration: 84600000 # 1 day
+      expiration: 36000000 # 10 hours
+#      expiration: 30000 # 30 seconds
+      refresh-token:
+        expiration:  604800000 # 7 days
+    momo:
+      access-key: mTCKt9W3eU1m39TW
+      partner-code: MOMOLRJZ20181206
+      secret-key: SetA5RDnLHvt51AULf51DyauxUo3kDU6
+    vnpay:
+      vnp_TmnCode: ZF769ZRJ
+      vnp_HashSecret: DEFBUBPEMBQFYDQGIIUJAXKRCUKMOOYU

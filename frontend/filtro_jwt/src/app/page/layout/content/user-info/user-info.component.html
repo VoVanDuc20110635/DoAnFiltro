@@ -1,0 +1,236 @@
+<section class="bread-crumb">
+  <div class="container">
+    <div class="bread-crumb-title text-center">
+      Thông tin người dùng
+    </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a [routerLink]="'/home'">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>Thông tin người dùng</strong> </li>
+      </ol>
+    </nav>
+  </div>
+</section>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="text-center">
+                  <div class="d-inline-flex mx-auto">
+                    <img class="cirle-img wid-120 img-fluid" src="assets/images/coffee_cup.png" alt="">
+                  </div>
+                  <h3><strong>{{user?.username}}</strong></h3>
+                  <p class="text-muted" *ngIf="hours>0 && hours<=10">Cà phê filtro xin chào, chúc bạn buổi sáng vui vẻ</p>
+                  <p class="text-muted" *ngIf="hours > 10 && hours<=14">Cà phê filtro xin chào, chúc bạn buổi trưa vui vẻ</p>
+                  <p class="text-muted" *ngIf="hours >14 && hours<=18">Cà phê filtro xin chào, chúc bạn buổi chiều vui vẻ</p>
+                  <p class="text-muted" *ngIf="hours > 18 && hours<=24">Cà phê filtro xin chào, chúc bạn buổi tối vui vẻ</p>
+                  <div class="row g-3 my-4">
+                    <div class="col-4">
+                      <h5><strong>o(*￣▽￣*)ブ</strong></h5>
+                      <p class="text-muted">***</p>
+                    </div>
+                    <div class="col-4">
+                      <h5><strong>（＾∀＾●）ﾉｼ</strong></h5>
+                      <p class="text-muted">***</p>
+                    </div>
+                    <div class="col-4">
+                      <h5><strong>(☞ﾟヮﾟ)☞</strong></h5>
+                      <p class="text-muted">***</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      <div class="col-md-8">
+        <mat-tab-group>
+          <mat-tab label="Thông tin cá nhân">
+            <div class="card">
+              <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <h4><strong>Thay đổi thông tin của bạn</strong></h4>
+                    <hr>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <mat-form-field>
+                            <mat-label>Username</mat-label>
+                            <input matInput formControlName="username" placeholder="Username">
+                          </mat-form-field>
+                          <mat-error *ngIf="profileForm.get('username').touched && !profileForm.get('username').valid">
+                            <p *ngIf="profileForm.get('username').hasError('required')">Không được để trống</p>
+                          </mat-error>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email" placeholder="Email address" type="email">
+                          </mat-form-field>
+                          <mat-error *ngIf="profileForm.get('email').touched && !profileForm.get('email').valid">
+                            <p *ngIf="profileForm.get('email').hasError('required')">Không được để trống</p>
+                            <p *ngIf="profileForm.get('email').hasError('email')">Email sai format</p>
+                          </mat-error>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <mat-form-field>
+                            <mat-label>Họ</mat-label>
+                            <input matInput formControlName="firstname" placeholder="Fist Name" type="text">
+                          </mat-form-field>
+                          <mat-error *ngIf="profileForm.get('firstname').touched && !profileForm.get('firstname').valid">
+                            <p *ngIf="profileForm.get('firstname').hasError('required')">Không được để trống</p>
+                            <p *ngIf="profileForm.get('firstname').hasError('pattern')">Không chứa số và kí tự đặc biệt</p>
+                          </mat-error>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field>
+                            <mat-label>Tên</mat-label>
+                            <input matInput formControlName="lastname" placeholder="Last Name" type="text">
+                          </mat-form-field>
+                          <mat-error *ngIf="profileForm.get('lastname').touched && !profileForm.get('lastname').valid">
+                            <p *ngIf="profileForm.get('lastname').hasError('required')">Không được để trống</p>
+                            <p *ngIf="profileForm.get('lastname').hasError('pattern')">Không chứa số và kí tự đặc biệt</p>
+                          </mat-error>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <mat-form-field appearance="fill">
+                            <mat-label>Ngày sinh</mat-label>
+                            <input [matDatepicker]="Picker" matInput formControlName="dob">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="Picker"></mat-datepicker-toggle>
+                            <mat-datepicker #Picker>
+                              <mat-datepicker-actions>
+                                <button mat-button matDatepickerCancel>Hủy</button>
+                                <button mat-raised-button color="primary" matDatepickerApply>Chọn</button>
+                              </mat-datepicker-actions>
+                            </mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field>
+                            <mat-label>Phone</mat-label>
+                            <input maxlength="10" matInput formControlName="phone" placeholder="Phone" type="text">
+                          </mat-form-field>
+                          <mat-error *ngIf="profileForm.get('phone').touched && !profileForm.get('phone').valid">
+                            <p *ngIf="profileForm.get('phone').hasError('required')">Không được để trống</p>
+                            <p *ngIf="profileForm.get('phone').hasError('pattern')">Chỉ chứa số</p>
+                          </mat-error>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <mat-form-field>
+                          <mat-label>Địa chỉ</mat-label>
+                          <input matInput formControlName="address" placeholder="Address" type="text">
+                        </mat-form-field>
+                        <mat-error *ngIf="profileForm.get('address').touched && !profileForm.get('address').valid">
+                          <p *ngIf="profileForm.get('address').hasError('required')">Không được để trống</p>
+                        </mat-error>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <mat-form-field appearance="fill">
+                            <mat-label>Thành phố/Tỉnh</mat-label>
+                            <mat-select (selectionChange)="onProvinceChange($event)" formControlName="province">
+                              <mat-option>Chọn thành phố/Tỉnh</mat-option>
+                              <mat-option  *ngFor="let p of provinces" [value]="p.name" >{{p.name}}</mat-option  >
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field>
+                            <mat-label >Quận/Huyện</mat-label>
+                            <mat-select (selectionChange)="onDistrictChange($event)" formControlName="district">
+                              <mat-option>Chọn Quận/Huyện</mat-option>
+                              <mat-option *ngFor="let d of districts" [value]="d.name">{{d.name}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field>
+                            <mat-label>Xã/Phường</mat-label>
+                            <mat-select (selectionChange)="onWardChange($event)" formControlName="ward">
+                              <mat-option>Chọn Xã/Phường</mat-option>
+                              <mat-option *ngFor="let w of wards" [value]="w.name">{{w.name}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button [disabled]="profileForm.invalid" mat-raised-button type="submit" class="btn btn-danger pull-right">Cập nhật hồ sơ</button>
+              </div>
+              </form>
+            </div>
+          </mat-tab>
+          <mat-tab label="Thay đổi mật khẩu">
+            <div class="card">
+              <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <h4><strong>Thay đổi thông tin mật khẩu cho tài khoản của bạn</strong></h4>
+                    <hr>
+                  </div>
+                      <div class="row">
+                        <div class="col">
+                          <mat-form-field>
+                            <mat-label>Mật khẩu cũ</mat-label>
+                            <input matInput formControlName="oldPassword" placeholder="Mật khẩu cũ" type="password">
+                            <!--                        <mat-icon  style="position: absolute; right: 10px ;cursor: pointer;" (click)="passwordType = !passwordType">-->
+                            <!--                          {{ passwordType ? 'visibility' : 'visibility_off' }}-->
+                            <!--                        </mat-icon>-->
+                          </mat-form-field>
+                          <mat-error *ngIf="passwordForm.get('oldPassword').touched && !passwordForm.get('oldPassword').valid">
+                            <p *ngIf="passwordForm.get('oldPassword').hasError('required')">Không được để trống</p>
+                          </mat-error>
+                          <a routerLink="/forgot-password" tabindex="-1" class="d-flex justify-content-end align-items-center text-decoration-none">Quên mật khẩu?</a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <mat-form-field>
+                            <mat-label>Mật khẩu mới</mat-label>
+                            <input matInput formControlName="newPassword" placeholder="Mật khẩu mới" [type]="passwordType ? 'text' : 'password'">
+                            <mat-icon  style="position: absolute; right: 10px ;cursor: pointer;" (click)="passwordType = !passwordType">
+                              {{ passwordType ? 'visibility' : 'visibility_off' }}
+                            </mat-icon>
+                            <mat-hint>Mật khẩu phải từ 6 đến 20 kí tự và có ít nhất 1 ký tự đặc biệt, chữ in hoa và số</mat-hint>
+                          </mat-form-field>
+                          <mat-error *ngIf="passwordForm.get('newPassword').touched && !passwordForm.get('newPassword').valid">
+                            <p *ngIf="passwordForm.get('newPassword').hasError('required')">Mật khẩu không được để trống</p>
+                            <p *ngIf="passwordForm.get('newPassword').hasError('pattern')">Sai passwordFormat</p>
+                          </mat-error>
+<!--                          <pre>{{passwordForm.controls.newPassword.errors | json}}</pre>-->
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <mat-form-field>
+                            <mat-label>Nhập lại mật khẩu mới</mat-label>
+                            <input matInput formControlName="confirmPassword" placeholder="Nhập lại mật khẩu mới" type="password">
+                          </mat-form-field>
+                          <mat-error *ngIf="passwordForm.hasError('invalidConfirmPassword')">
+                            <p>Mật khẩu không khớp</p>
+                          </mat-error>
+<!--                          <pre>{{passwordForm.errors | json}}</pre>-->
+                        </div>
+                      </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button [disabled]="passwordForm.invalid" mat-raised-button type="submit" class="btn btn-danger pull-right">Đổi mật khẩu</button>
+              </div>
+              </form>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+</div>

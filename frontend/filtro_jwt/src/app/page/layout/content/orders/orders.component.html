@@ -1,0 +1,115 @@
+<section class="bread-crumb">
+  <div class="container">
+    <div class="bread-crumb-title text-center">
+      LỊCH SỬ ĐƠN HÀNG
+    </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a [routerLink]="'/home'">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>
+          Lịch sử đơn hàng
+        </strong> </li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<section *ngIf="!isLoading; else loading" class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="table-responsive">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="orderCode">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã đơn hàng </th>
+                  <td class="f-w-500" mat-cell *matCellDef="let row"> {{row.orderCode}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fullName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ tên người đặt </th>
+                  <td class="f-w-500" mat-cell *matCellDef="let row"> {{row.fullName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="orderDate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header > Ngày đặt hàng </th>
+                  <td mat-cell *matCellDef="let row">
+                    <span class="f-w-500 fs-16">{{row.orderDate.slice(0, 10) | date:'dd-MM-yyyy'}}</span>
+                    <span class="text-muted">{{row.orderDate.slice(10, 19)}}</span>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Tổng tiền </th>
+                  <td class="f-w-600 fs-15" mat-cell *matCellDef="let row"> {{row.total | currencyVND}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
+                  <td mat-cell *matCellDef="let row">
+                    <div [ngSwitch]="row.status">
+                    <span *ngSwitchCase="'PENDING'"
+                          class="badge bg-warning-subtle text-warning">Đang chờ xử lý</span>
+                      <span *ngSwitchCase="'PAID_MOMO'"
+                            class="badge bg-secondary-subtle text-secondary">Đã thanh toán bằng MOMO</span>
+                      <span *ngSwitchCase="'PAID_VNPAY'"
+                            class="badge bg-secondary-subtle text-secondary">Đã thanh toán bằng Vnpay</span>
+                      <span *ngSwitchCase="'CONFIRMED'"
+                            class="badge bg-success-subtle text-success">Đã xác nhận</span>
+                      <span *ngSwitchCase="'CANCELED'"
+                            class="badge bg-danger-subtle text-danger">Đã hủy thanh toán</span>
+                      <span *ngSwitchDefault
+                            class="badge text-bg-info">Lỗi giao dịch</span>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>###</th>
+                  <td mat-cell *matCellDef="let row">
+                    <button class="me-3" mat-mini-fab color="primary" (click)="openOrderDetailsDialog(row)">
+                      <mat-icon fontIcon="visibility"></mat-icon>
+                    </button>
+                    <button *ngIf="row.status != 'CANCELED' && row.status!= 'CONFIRMED' && row.status != 'FAILED'" mat-mini-fab color="warn" (click)="openCancelDialog(row)">
+                      <mat-icon fontIcon="close"></mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <ng-container *ngIf="!(orders.length> 0 && orders)">
+                <div class="text-center my-3">
+                  <h2><b>Bạn chưa có đơn hàng nào</b></h2>
+                  <a [routerLink]="['/home']">
+                    <button mat-raised-button color="primary">
+                      <mat-icon fontIcon="home"></mat-icon>
+                      Tiếp tục mua hàng
+                    </button>
+                  </a>
+                </div>
+              </ng-container>
+
+              <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<ng-template #loading>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center align-items-center">
+          <mat-progress-spinner
+            color="primary"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

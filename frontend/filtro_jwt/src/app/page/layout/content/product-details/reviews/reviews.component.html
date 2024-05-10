@@ -1,0 +1,108 @@
+<div class="card-body">
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" *ngIf="ratingProduct?.rating > 0 && ratingProduct?.rating; else noRating">
+          <div class="col-sm-6">
+            <h1 class="mb-3">
+              <b>{{ratingProduct?.rating.toFixed(1)}}<small class="text-muted">/5</small></b>
+            </h1>
+            <p class="mb-2 text-muted">Dựa trên {{reviewCount??0}} lượt đánh giá</p>
+            <div class="star mb-3 f-20">
+              <ng-container *ngIf="ratingProduct?.rating > 0; else starsOffs">
+                <i *ngFor="let star of calculateRating(ratingProduct?.rating)" class="fas fa-star text-warning star-off"></i>
+                <ng-container *ngIf="ratingProduct?.rating < 5">
+                  <i *ngFor="let star of calculateRating(5-ratingProduct?.rating)" class="far fa-star text-warning star-off"></i>
+                </ng-container>
+              </ng-container>
+                <ng-template #starsOffs>
+                  <i class="far fa-star text-warning star-off"></i>
+                  <i class="far fa-star text-warning star-off"></i>
+                  <i class="far fa-star text-warning star-off"></i>
+                  <i class="far fa-star text-warning star-off"></i>
+                  <i class="far fa-star text-warning star-off"></i>
+                </ng-template>
+
+            </div>
+            <div *ngIf="user;else noUser">
+              <button *ngIf="hasBoughtProduct && !isUserReviewed; else option" (click)="onActiveReview({id: null, type: activeReviewTypeEnum.review})" type="button" class="btn btn-primary btn-review">Đánh giá sản phẩm</button>
+              <ng-template #option>
+                <strong *ngIf="!hasBoughtProduct"><h2 class="f-w-600"><i>Bạn cần mua sản phẩm này để có thể bình luận!</i></h2></strong>
+              </ng-template>
+            </div>
+            <ng-template #noUser>
+              <strong><h2 class="f-w-600"><i>Bạn cần đăng nhập để có thể bình luận!</i></h2></strong>
+            </ng-template>
+          </div>
+          <div class="col-sm-6">
+            <div class="d-flex align-items-center">
+              <div class="w-100">
+                <div class="row align-items-center my-2" *ngFor="let r of reviewsRating">
+                  <div class="col">
+                    <mat-progress-bar color="accent" mode="determinate" [value]="r.count*100/reviewCount"></mat-progress-bar>
+                  </div>
+                  <div class="col-auto">
+                    <p class="mb-0 text-muted">{{r.rating}} sao</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <app-review-form *ngIf="isReview()"
+                             submitLabel="Gửi"
+                             [isParent]="false"
+                             [hasCancelButton]="true"
+                             (onCancel)="handleActiveReview(null)"
+                             (onReviewSubmitForm)="handleSubmitReview({content :$event, parentId:null})"
+            >
+            </app-review-form>
+          </div>
+        </div>
+        <ng-template #noRating>
+          <div class="row">
+            <div class="col-sm-12">
+              <h1 class="mb-3">
+                <b>Chưa có đánh giá</b>
+              </h1>
+<!--              <p class="mb-2 text-muted">Hãy là người đầu tiên đánh giá sản phẩm này</p>-->
+<!--              <button *ngIf="user" (click)="onActiveReview({id: null, type: activeReviewTypeEnum.review})" type="button" class="btn btn-primary btn-review">Đánh giá sản phẩm</button>-->
+              <div *ngIf="user">
+                <p class="mb-2 text-muted">Hãy là người đầu tiên đánh giá sản phẩm này</p>
+                <button *ngIf="hasBoughtProduct; else notBoughtProduct" (click)="onActiveReview({id: null, type: activeReviewTypeEnum.review})" type="button" class="btn btn-primary btn-review">Đánh giá sản phẩm</button>
+                <ng-template #notBoughtProduct>
+                  <strong><h2 class="f-w-600"><i>Bạn cần mua sản phẩm này để có thể bình luận!</i></h2></strong>
+                </ng-template>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <app-review-form *ngIf="isReview()"
+                               submitLabel="Gửi"
+                                [isParent]="false"
+                               [hasCancelButton]="true"
+                               (onCancel)="handleActiveReview(null)"
+                               (onReviewSubmitForm)="handleSubmitReview({content :$event, parentId:null})"
+              >
+              </app-review-form>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <app-review *ngFor="let r of reviews"
+                [review]="r"
+                [starCount]="r.rating"
+                [product] = "product"
+                [user] = "user"
+                [replies]="getReplies(r.id)"
+                [activeReview]="activeReview"
+                (setActiveReviewReply)="handleActiveReview($event)"
+                (setActiveReviewEdit)="handleActiveReview($event)"
+                (onReplyReview)="handleSubmitReview($event)"
+                (onEditReview)="handleEditReview($event)"
+                (onDeleteReview)="handleDeleteReview($event)"
+    >
+    </app-review>
+
+  </div>
+</div>

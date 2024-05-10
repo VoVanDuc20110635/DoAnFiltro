@@ -1,0 +1,130 @@
+.opacity-50{
+  opacity: .5!important;
+}
+
+.fs-14{
+  font-size: 14px!important;
+}
+
+.fs-22{
+  font-size: 22px!important;
+}
+
+.fw-medium{
+  font-weight: 500!important;
+}
+
+.fw-semibold{
+  font-weight: 600!important;
+}
+
+.avatar-sm{
+  width: 3rem;
+  height: 3rem;
+}
+
+.bg-success-subtle{
+  background-color: #cdf7ec !important;
+}
+
+.bg-danger-subtle{
+  background-color: #fde2e6 !important;
+}
+
+.bg-warning-subtle{
+  background-color: #fcf2da !important;
+}
+
+.bg-primary-subtle{
+  background-color: #dbe9ff !important;
+}
+
+.bg-secondary{
+  --tb-text-opacity: 1;
+  background-color: rgba(124,107,255, 1) !important;
+}
+
+.bg-secondary-subtle{
+  background-color: #e5e1ff !important;
+}
+
+.bg-info-subtle{
+  background-color: #d2edf6 !important;
+}
+
+.btn-soft-primary{
+  color: #4b93ff;
+  background: rgba(75, 147, 255, 0.1);
+   &:hover{
+      color: #fff;
+      background-color: #4b93ff;
+      border-color: transparent;
+    }
+ }
+
+.btn-soft-secondary{
+  color: #7c6bff;
+  background: rgba(124, 107, 255, 0.1);
+  &:hover{
+    color: #fff;
+    background-color: #7060e6;
+    border-color: transparent;
+  }
+}
+
+.active-btn-secondary{
+  color: #fff;
+  background-color: #7060e6;
+  border-color: transparent;
+}
+
+.border-dashed {
+  border-style: dashed!important;
+}
+
+.card-animate{
+  -webkit-transition: all .4s;
+  transition: all .4s;
+  &:hover{
+    -webkit-transform: translateY(calc(-1.5rem / 5));
+    transform: translateY(calc(-1.5rem / 5));
+    -webkit-box-shadow: 0 5px 10px rgba(135,138,153,.12);
+    box-shadow: 0 5px 10px rgba(135,138,153,.12);
+  }
+}
+
+.card-height-100 {
+  height: calc(100% - 1.5rem);
+}
+
+.avatar-title{
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #4b93ff;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: 500;
+  height: 100%;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.card-header{
+  border-bottom: 1px solid #e9ebec;
+  background-color: #ffffff;
+}
+
+#chart {
+  max-width: 700px;
+  margin: 35px auto;
+  padding: 0;
+}
+
+
+.card-body{
+  overflow: hidden;
+}
