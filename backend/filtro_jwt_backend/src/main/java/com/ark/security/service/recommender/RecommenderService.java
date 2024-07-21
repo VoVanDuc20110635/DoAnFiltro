@@ -1,6 +1,8 @@
 package com.ark.security.service.recommender;
 
 import com.ark.security.dto.ProductDto;
+import com.ark.security.exception.NotFoundException;
+import com.ark.security.models.recommender.RecommendationResponse;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import com.ark.security.models.product.Product;
 import com.ark.security.models.recommender.TastePreferences;
@@ -10,35 +12,15 @@ import com.ark.security.service.product.ProductService;
 import com.ark.security.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.common.Weighting;
-import org.apache.mahout.cf.taste.eval.*;
-import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
-import org.apache.mahout.cf.taste.impl.eval.AverageAbsoluteDifferenceRecommenderEvaluator;
-import org.apache.mahout.cf.taste.impl.eval.GenericRecommenderIRStatsEvaluator;
-import org.apache.mahout.cf.taste.impl.model.GenericBooleanPrefDataModel;
-import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
-import org.apache.mahout.cf.taste.impl.model.jdbc.ReloadFromJDBCDataModel;
-import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
-import org.apache.mahout.cf.taste.impl.neighborhood.ThresholdUserNeighborhood;
-import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
-import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
-import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
-import org.apache.mahout.cf.taste.impl.similarity.*;
-import org.apache.mahout.cf.taste.model.DataModel;
-import org.apache.mahout.cf.taste.model.PreferenceArray;
-import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
-import org.apache.mahout.cf.taste.recommender.RecommendedItem;
-import org.apache.mahout.cf.taste.recommender.Recommender;
-import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
-import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
-import org.apache.mahout.cf.taste.similarity.UserSimilarity;
-import org.apache.mahout.common.distance.CosineDistanceMeasure;
-import org.apache.mahout.math.hadoop.similarity.cooccurrence.measures.CosineSimilarity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -49,8 +31,11 @@ public class RecommenderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final UserService userService;
+    private final RestTemplate restTemplate;
     private final Logger logger = LoggerFactory.getLogger(RecommenderService.class);
     private final int NEIGHBORHOOD_NUM = 5;
+    @Value("${spring.fast-api.url}")
+    private String URL;
 
 
     public void migrateOrderDataToTastePreferences(){
@@ -74,47 +59,47 @@ public class RecommenderService {
         return tastePreferencesRepository.existsByUserId(userId);
     }
 
-    public List<ProductDto> recommendProductsForUser(int userId) throws TasteException {
-        List<ProductDto> productDtos = new ArrayList<>();
+//    public List<ProductDto> recommendProductsForUser(int userId) throws TasteException {
+//        List<ProductDto> productDtos = new ArrayList<>();
 //        migrateOrderDataToTastePreferences();
-        if (checkIfUserExistsInTastePreferences((long) userId)) {
-            try {
-                Recommender recommender = getRecommender();
-                List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
-                System.out.println("Recommneds for user " + userId + " are: ");
-                System.out.println("**********************************************");
-                System.out.println("ItemID\t estimated preference");
-                for (RecommendedItem ri : recommendations) {
-                    int itemId = (int) ri.getItemID();
-                    Product product = productService.getProductById(itemId);
-                    float estimatePref = recommender.estimatePreference(userId, itemId);
-                    System.out.println(itemId + " " + product.getName() + "\t" + estimatePref);
-                    ProductDto productDto = product.convertToDto();
-                    productDtos.add(productDto);
-                }
-//                    System.out.println("**********************************************");
-//                    long[] userIds = recommender.mostSimilarUserIDs(userId, 5);
-//                    System.out.println("Most similar users to user " + userId + " are: ");
-//                    for (long uid : userIds){
-//                        int id = (int) uid;
-//                        User user = userService.getUserById(id);
-//                        System.out.println(user.getUsername());
-//                    }
-            } catch (TasteException e) {
-                logger.error(String.valueOf(e));
-            }
-        }
-        return productDtos;
+//        if (checkIfUserExistsInTastePreferences((long) userId)) {
+//            try {
+//                Recommender recommender = getRecommender();
+//                List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
+//                System.out.println("Recommneds for user " + userId + " are: ");
+//                System.out.println("**********************************************");
+//                System.out.println("ItemID\t estimated preference");
+//                for (RecommendedItem ri : recommendations) {
+//                    int itemId = (int) ri.getItemID();
+//                    Product product = productService.getProductById(itemId);
+//                    float estimatePref = recommender.estimatePreference(userId, itemId);
+//                    System.out.println(itemId + " " + product.getName() + "\t" + estimatePref);
+//                    ProductDto productDto = product.convertToDto();
+//                    productDtos.add(productDto);
+//                }
+////                    System.out.println("**********************************************");
+////                    long[] userIds = recommender.mostSimilarUserIDs(userId, 5);
+////                    System.out.println("Most similar users to user " + userId + " are: ");
+////                    for (long uid : userIds){
+////                        int id = (int) uid;
+////                        User user = userService.getUserById(id);
+////                        System.out.println(user.getUsername());
+////                    }
+//            } catch (TasteException e) {
+//                logger.error(String.valueOf(e));
+//            }
+//        }
+//        return productDtos;
+//
+//    }
 
-    }
-
-    private Recommender getRecommender() throws TasteException {
-        DataModel dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(getDataSource()));
-        UserSimilarity similarity = new EuclideanDistanceSimilarity(dataModel, Weighting.WEIGHTED);
-        UserNeighborhood neighborhood = new NearestNUserNeighborhood(NEIGHBORHOOD_NUM, similarity, dataModel);
-        UserBasedRecommender userBasedRecommender = new GenericUserBasedRecommender(dataModel, neighborhood, similarity);
-        return new CachingRecommender(userBasedRecommender);
-    }
+//    private Recommender getRecommender() throws TasteException {
+//        DataModel dataModel = new ReloadFromJDBCDataModel(new MySQLJDBCDataModel(getDataSource()));
+//        UserSimilarity similarity = new EuclideanDistanceSimilarity(dataModel, Weighting.WEIGHTED);
+//        UserNeighborhood neighborhood = new NearestNUserNeighborhood(NEIGHBORHOOD_NUM, similarity, dataModel);
+//        UserBasedRecommender userBasedRecommender = new GenericUserBasedRecommender(dataModel, neighborhood, similarity);
+//        return new CachingRecommender(userBasedRecommender);
+//    }
 
 
 //    public void recommendProductsForUser(int userId) throws TasteException {
@@ -147,16 +132,35 @@ public class RecommenderService {
     }
 
 
-//    @Override
-//    public Recommender buildRecommender(DataModel dataModel) throws TasteException {
-//        UserSimilarity similarity = new PearsonCorrelationSimilarity(dataModel, Weighting.WEIGHTED);
-////        UserSimilarity similarity = new LogLikelihoodSimilarity(dataModel);
-//        UserNeighborhood neighborhood = new ThresholdUserNeighborhood(NEIGHBORHOOD_NUM, similarity, dataModel);
-//        return new GenericUserBasedRecommender(dataModel, neighborhood, similarity);
-//    }
-//
-//    @Override
-//    public DataModel buildDataModel(FastByIDMap<PreferenceArray> fastByIDMap) {
-//        return new GenericBooleanPrefDataModel(GenericBooleanPrefDataModel.toDataMap(fastByIDMap));
-//    }
+    public RecommendationResponse fastApi(int userId){
+        System.out.println(URL+"/recommendations/"+userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+//        ResponseEntity<RecommendationResponse> response = restTemplate.exchange(URL+"/recommendations/"+userId, HttpMethod.GET, entity, RecommendationResponse.class);
+        ResponseEntity<RecommendationResponse> response = restTemplate.getForEntity(URL+"/recommendations/"+userId, RecommendationResponse.class);
+        return response.getBody();
+    }
+
+    public List<ProductDto> recommend(int userId){
+        if(!userService.checkUserExistById(userId)){
+            throw new NotFoundException("Không tìm thấy user với ID: " + userId);
+        }
+        if(userService.hasUserEverBoughtAProduct(userId)){
+            RecommendationResponse response = fastApi(userId);
+            List<ProductDto> productDtos = new ArrayList<>();
+            for(int id : response.getRecommendations()){
+                Product product = productService.getProductById(id);
+                ProductDto productDto = product.convertToDto();
+                productDtos.add(productDto);
+            }
+            return productDtos;
+        }
+        return List.of();
+    }
+
+    public boolean check(int userId){
+        return userService.hasUserEverBoughtAProduct(userId);
+    }
 }
+

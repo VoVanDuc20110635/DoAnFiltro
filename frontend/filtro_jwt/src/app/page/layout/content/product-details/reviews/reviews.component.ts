@@ -8,6 +8,7 @@ import {ActiveReviewTypeEnum} from "../../../../../shared/utils/active-review-ty
 import {UtilService} from "../../../../../service/util.service";
 import {ReviewRating} from "../../../../../shared/models/statistic/review-rating";
 import {ProductService} from "../../../../../service/product/product.service";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-reviews',
@@ -72,6 +73,7 @@ export class ReviewsComponent implements OnInit, OnChanges{
 
   getAllReviewsByProductId(id:number){
     this.reviewService.getReviewsByProductId(id)
+      .pipe(tap(data => data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())))
       .subscribe({
       next: data => {
         this.reviews = data.filter(r=> r.parentId === null);
@@ -84,10 +86,11 @@ export class ReviewsComponent implements OnInit, OnChanges{
   }
 
   checkUserReviewed(userId:number, productId:number){
-    if(this.user!==null){
+    if(this.user!=null){
       this.reviewService.isUserReviewed(userId, productId).subscribe({
         next: data => {
           this.isUserReviewed = data;
+          console.log(data)
         },
         error: err => {
           console.log(err);
@@ -127,10 +130,11 @@ export class ReviewsComponent implements OnInit, OnChanges{
   }
 
   checkHasBoughtProduct(userId:number, productId:number){
-    this.reviewService.hasUserBoughtProduct(userId, productId).subscribe(data=>{
-      console.log(data)
-      this.hasBoughtProduct = data;
-    });
+    if(this.user!=null){
+      this.reviewService.hasUserBoughtProduct(userId, productId).subscribe(data=>{
+        this.hasBoughtProduct = data;
+      });
+    }
   }
 
   getReplies(id:number){
@@ -159,6 +163,7 @@ export class ReviewsComponent implements OnInit, OnChanges{
         this.getReviewCount(this.product?.id);
         this.getReviewsRating(this.product?.id);
         this.getProductDto(this.product?.id);
+        this.checkUserReviewed(this.user?.id, this.product?.id);
         this.activeReview = null;
         this.utilService.openSnackBar(data.message, 'Đóng');
       },

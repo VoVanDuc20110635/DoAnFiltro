@@ -3,9 +3,10 @@ import {HttpClient} from "@angular/common/http";
 import {Voucher} from "../shared/models/voucher";
 import {catchError, throwError} from "rxjs";
 import {SuccessMessage} from "../shared/models/success-message";
+import {environment} from "../../environments/environment";
 
-const VOUCHER_API_ADMIN = 'http://localhost:8080/api/v1/admin/voucher';
-const VOUCHER_API = 'http://localhost:8080/api/v1/user/voucher';
+const VOUCHER_API_ADMIN = `${environment.springboot_url}/api/v1/admin/voucher`;
+const VOUCHER_API = `${environment.springboot_url}/api/v1/user/voucher`;
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,19 @@ export class VoucherService {
   }
 
 
-  getAvailableVoucher(productId:number){
+  getAvailableVoucherByProductId(productId:number){
     return this.http.get<Voucher[]>(`${VOUCHER_API}/availableVouchers/${productId}`)
+      .pipe(
+        catchError(err => {
+          console.log('Error handled by Service...' + err.status);
+          return throwError(() => new Error(err.error.message))
+        })
+      );
+  }
+
+
+  getAvailableVoucherToAllProducts(){
+    return this.http.get<Voucher[]>(`${VOUCHER_API}/availableVouchers/all`)
       .pipe(
         catchError(err => {
           console.log('Error handled by Service...' + err.status);
@@ -51,6 +63,16 @@ export class VoucherService {
 
   updateVoucher(id:number, voucher:Voucher){
     return this.http.put<SuccessMessage>(`${VOUCHER_API_ADMIN}/update/${id}`, voucher)
+      .pipe(
+        catchError(err => {
+          console.log('Error handled by Service...' + err.status);
+          return throwError(() => new Error(err.error.message))
+        })
+      );
+  }
+
+  checkVoucherExpirationDate(voucherId:number){
+    return this.http.get<boolean> (`${VOUCHER_API}/check/${voucherId}`)
       .pipe(
         catchError(err => {
           console.log('Error handled by Service...' + err.status);

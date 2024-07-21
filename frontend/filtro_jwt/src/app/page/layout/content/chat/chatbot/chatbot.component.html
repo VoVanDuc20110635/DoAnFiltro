@@ -1,0 +1,45 @@
+<form [formGroup]="form" class="chat-container">
+  <mat-card [ngClass]="display">
+    <mat-card-header class="chat-header">
+      <img mat-card-avatar src="./assets/images/bot.png" class="chat-icon" alt="">
+      <mat-card-title class="chat-title">Chatbot</mat-card-title>
+      <mat-card-subtitle class="chat-subtitle">
+        <div class="status-icon"></div>
+        <span>Online</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="chat-content" #messageContainer>
+      <div *ngFor="let message of messages" class="messages">
+        <div [ngClass]="'message ' + message.type">
+          <div [innerHTML]="message.text"></div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="chat-actions">
+      <mat-form-field appearance="fill" class="chat-form">
+        <textarea
+          class="chat-input"
+          matInput
+          type="text"
+          placeholder="Type message..."
+          formControlName="message"
+          (keydown.enter) = onClickEnter($event)
+        ></textarea>
+        <button
+          *ngIf="!isLoading;else loading"
+          class="send-button"
+          matSuffix
+          mat-icon-button
+          aria-label="Send"
+          (click)="onClickSendMessage()"
+          [disableRipple]="true"
+        >
+          <mat-icon class="send-icon">send</mat-icon>
+        </button>
+        <ng-template #loading>
+            <mat-spinner matSuffix color="accent" [diameter]="20" style="float:right; margin-right: 8px;"></mat-spinner>
+        </ng-template>
+      </mat-form-field>
+    </mat-card-actions>
+  </mat-card>
+</form>

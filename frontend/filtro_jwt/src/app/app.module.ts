@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import {AuthInterceptor} from "./auth.interceptor";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialogRef} from "@angular/material/dialog";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MY_DATE_FORMAT} from "./shared/utils/config"
 import {MomentUtcDateAdapter} from "./shared/utils/date-format";
@@ -20,6 +20,8 @@ import {AdminModule} from "./admin/admin.module";
 import {PageModule} from "./page/page.module";
 import {RouterModule} from "@angular/router";
 import {QuillModule} from "ngx-quill";
+import {ScrollStrategyOptions} from "@angular/cdk/overlay";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 
 
 
@@ -42,6 +44,7 @@ firebase.initializeApp(environment.firebaseConfig) //firebase
     QuillModule
   ],
   providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } },
     // {
     //   provide: ErrorHandler,
     //   useClass: GlobalErrorHandlerService

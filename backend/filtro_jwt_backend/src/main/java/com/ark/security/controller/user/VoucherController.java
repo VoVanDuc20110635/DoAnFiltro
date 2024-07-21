@@ -22,8 +22,19 @@ public class VoucherController {
 
 
     @GetMapping("/availableVouchers/{productId}")
-    public ResponseEntity<?> getAvailableVouchers(@PathVariable int productId){
+    public ResponseEntity<?> getAvailableVouchersByProductId(@PathVariable int productId){
         return ResponseEntity.ok(voucherService.showAvailableVoucherByProductId(productId));
+    }
+
+    @GetMapping("/availableVouchers/all")
+    public ResponseEntity<?> getAvailableVouchers(){
+        return ResponseEntity.ok(voucherService.showAvailableVoucherToAllProducts());
+    }
+
+
+    @GetMapping("/check/{voucherId}")
+    public ResponseEntity<?> checkVoucher(@PathVariable int voucherId){
+        return ResponseEntity.ok(voucherService.checkVoucherExpiration(voucherId));
     }
 
 
@@ -54,4 +65,7 @@ public class VoucherController {
                 .build();
         return ResponseEntity.ok(successMessage);
     }
+
+
+
 }

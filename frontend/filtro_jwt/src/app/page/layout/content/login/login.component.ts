@@ -15,11 +15,11 @@ import {CartItemDto} from "../../../../shared/dto/cart-item-dto";
 })
 export class LoginComponent implements OnInit{
   form!:FormGroup;
-  passwordType= true;
+  passwordType= false;
   cartItems: CartItemDto[];
 
-  constructor(private formBuilder: FormBuilder
-              ,private authService:AuthenticationService,
+  constructor(private formBuilder: FormBuilder,
+              private authService:AuthenticationService,
               private tokenService:TokenService,
               private utilService:UtilService,
               private router: Router,

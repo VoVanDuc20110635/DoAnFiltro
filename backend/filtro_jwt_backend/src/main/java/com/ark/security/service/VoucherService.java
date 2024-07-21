@@ -87,14 +87,16 @@ public class VoucherService {
 
     }
 
-    public void checkVoucherExpiration(int id){
+    public boolean checkVoucherExpiration(int id){
         Voucher voucher = getVoucherById(id);
-        if(voucher == null){
-            throw new VoucherException("Không tìm thấy voucher");
+        if(voucher!=null){
+            if(voucher.getExpirationDate().isAfter(LocalDateTime.now())){
+                return true;
+            }else{
+                throw new VoucherException("Voucher hết hạn");
+            }
         }
-        if(voucher.getExpirationDate().isBefore(LocalDateTime.now())){
-            throw new VoucherException("Voucher hết hạn sử dụng");
-        }
+        return false;
     }
 
     public List<Voucher> showAvailableVoucherByProductId(int productId){
@@ -113,6 +115,23 @@ public class VoucherService {
         }
         return availableVouchers;
     }
+
+    public List<Voucher> showAvailableVoucherToAllProducts(){
+        List<Voucher> vouchers = voucherRepository.findAll();
+        List<Voucher> availableVouchers = vouchers.stream()
+                .filter(voucher-> {
+                    if(voucher.getCategory() == null){
+                        return voucher.getExpirationDate().isAfter(LocalDateTime.now());
+                    }
+                    return false;
+                })
+                .toList();
+        if(availableVouchers.isEmpty()){
+            return Collections.emptyList();
+        }
+        return availableVouchers;
+    }
+
 
     public void applyVoucher(int userId, String code) {
         Voucher voucher = voucherRepository.findByCode(code).orElse(null);
