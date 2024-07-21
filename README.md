@@ -1,19 +1,24 @@
 # Four Leaves Shoe - Project Overview
-- URL: https://shoeselling-fourleavesshoes.onrender.com
+- URL: https://filtrocoffee.com/home
 - This project aims to replicate the functionality of an e-commerce website. It offers a comprehensive suite of features that cater to both customers and store managers.
-
+  
 # Technologies Used
-
-- Front-end: Thymeleaf (using template bootstrap)
+- Front-end: Angular
 - Backend: Spring Boot
 - Database: SQL
+- Recommender System: K-nearest neighbors (KNN) via the Surprise library of Python
+- ChatbotAI: the LLM of OpenAI via the LangChain library of Python
 
 ## Features
 
 ### For Customers
 - **Store Information**: Provides details about the store.
 - **Order Placement**: Allows customers to place orders for their desired products.
-- **Payment Gateway**: Facilitates payment transactions for purchases.
+- **Payment Gateway**: Facilitates payment transactions for purchases through the Momo e-wallet and the VnPay payment gateway.
+- **Recommender System**: Propose 10 products for the user.
+-- If there are no confirmed orders, there will be no product recommendation system.
+-- If there are any confirmed orders in the user's account and the user hasn't commented in any product, the system suggests the 10 highest-rated products in the database.
+-- If there is a confirmed order, the system suggests the 10 highest-rated products based on previous reviews from this account.
 
 ### For Store Management
 - **User Information Management**: Handles the data related to store users.
