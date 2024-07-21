@@ -16,9 +16,7 @@
 - **Order Placement**: Allows customers to place orders for their desired products.
 - **Payment Gateway**: Facilitates payment transactions for purchases through the Momo e-wallet and the VnPay payment gateway.
 - **Recommender System**: Propose 10 products for the user.
--- If there are no confirmed orders, there will be no product recommendation system.
--- If there are any confirmed orders in the user's account and the user hasn't commented in any product, the system suggests the 10 highest-rated products in the database.
--- If there is a confirmed order, the system suggests the 10 highest-rated products based on previous reviews from this account.
+- **Chatbot AI**: Users can quickly look up information through the AI chatbot system via OpenAI's LLM.
 
 ### For Store Management
 - **User Information Management**: Handles the data related to store users.
@@ -28,8 +26,8 @@
 
 ## Admin Account
 
-**Username**: doananh0100  
-**Password**: Duc2112002@
+**Username**: admin  
+**Password**: Piotthed@rkness1
 
 ## Main Features
 
@@ -42,18 +40,19 @@
 
 ### Security
 - Utilized Spring Security and JWT tokens for managing authentication and authorization.
-- Secured the web application against attacks like CSRF, Brute Force, Clickjacking, XSS.
 
 ### Payment Integration
 - Payment is handled through Momo e-wallet and Vnpay payment gateway.
 
-### Integration with Other Services
-- Working with Gmail, Excel, and PDF applications to manage orders for customers and data management for the store.
-- Wrote APIs for Android app integration.
+### Recommender System
+- Implement the product recommendation system using the K-nearest neighbors (KNN) algorithm through the Surprise library in Python.
+- Propose 10 products for the user after login.
+  - If there are no confirmed orders, there will be no product recommendation system.
+  - If there are any confirmed orders in the user's account and the user hasn't commented on any product, the system suggests the 10 highest-rated products in the database.
+  - If there is a confirmed order, the system suggests the 10 highest-rated products based on previous reviews from this account.
 
-### Social Login and Communication
-- Used OAuth2 for logging in with Google, Facebook (under development).
-- Used Twilio to send SMS messages through a phone number for verification support (under development).
+### Chatbot AI
+- Users can quickly look up information through the AI chatbot system via OpenAI's LLM.
 
 # ===================================================================================================================
 
@@ -107,56 +106,28 @@
 ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/8c740ddd-1ae5-4d29-bdbd-5adcbb71713c)
 ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/67947bcb-cccb-4413-8e8e-3af923a3521d)
 
-## 3. Working with Gmail, Excel, and PDF applications to manage orders for customers and data management for the store.
 
-### 3.1. Working with Gmail
-- Change password
-  ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/dce95b65-8b18-4d8c-b594-225c3522287c)
-  ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/260b303f-5c80-48e8-b90f-d724d076f896)
+## 3. Utilized Spring Security and JWT tokens for managing authentication and authorization.
 
-- Send invoices after purchasing
-  ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/74141053-0ceb-459f-8ea7-8e6e59ff4b7e)
-
-### 3.2. Working with Excel (CSV) - under development
-
-- Export, Import CSV files in store management for employees
-
-### 3.3. Working with PDF - under development
-
-- Print invoices in PDF format
-
-## 4. Wrote APIs for Android app integration.
-- Example of getting product's list api
-  ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/c6be7ed9-6874-4ce8-9146-4f0a503b3c36)
-
-- Example of getting staff's list api
-  ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/34a04b7c-32f4-458b-bd47-5821c54cdd65)
-
-
-## 5. Utilized Spring Security and JWT tokens for managing authentication and authorization.
-
-### 5.1. JWT tokens and permissions
+### 3.1. JWT tokens and permissions
 ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/6f8c3ec7-f06c-45e6-9a11-48639e2da7d8)
 ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/ecdb5f49-59fa-489a-94bf-a311627eba71)
 ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/e2549f2f-50c5-4578-8395-58ecddd0dd1c)
 
-### 5.2. Incorrect login
+### 3.2. Incorrect login
 ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/6c3bef7b-83a1-4464-8237-d6b4bf347c50)
 
-### 5.3. Access denied when trying to access unauthorized areas (before and after login)
+### 3.3. Access denied when trying to access unauthorized areas (before and after login)
 - Without login: Let's access this url without login: http://localhost:3030/admin/user. Here is the result
   ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/3c77ed53-fb0e-4bff-97d5-814b228c7afe)
 
 - After login
   ![image](https://github.com/VoVanDuc20110635/DoAnXinViec_fourleavesshoes/assets/116067030/7936d63b-e965-48b5-9af5-d28e6699cd3a)
 
-## 6. Secured the web application against attacks like CSRF, Brute Force, Clickjacking, XSS.
+## 4. Recommender System.
+- If there are any confirmed orders in the user's account and the user hasn't commented on any product, the system suggests the 10 highest-rated products in the database.
+[image]
 
-- Protect against CSRF (Cross-Site Request Forgery) attacks: FourLeavesShoes uses CSRF tokens to validate user requests and prevent CSRF attacks.
-- Protect against Brute Force attacks: FourLeavesShoes applies a policy to limit the number of failed login attempts and waiting time between logins to prevent Brute Force attacks.
-- Protect against Clickjacking attacks: FourLeavesShoes uses HTTP header frame options to prevent Clickjacking attacks.
-- Protect against XSS (Cross-Site Scripting) attacks: FourLeavesShoes applies input filtering and output encoding to prevent XSS attacks.
-
-## 7. Used OAuth2 for logging in with Google, Facebook (under development).
-
-## 8. Used Twilio to send SMS messages through a phone number for verification support (under development).
+- If there is a confirmed order, the system suggests the 10 highest-rated products based on previous reviews from this account.
+[image]
+## 5. Chatbot AI.
