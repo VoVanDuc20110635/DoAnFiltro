@@ -56,7 +56,7 @@
 
 ### 1.1. Account registration and login
 - Registration
-  ![image](https://github.com/user-attachments/assets/fa9d7621-326d-45f2-8b0c-9dad70fc312a)
+  ![image](https://github.com/user-attachments/assets/07eb20e4-3ab4-4074-ae42-18b33b670715)
 
 - Register successfully
   ![image](https://github.com/user-attachments/assets/969e9722-4980-4919-80d0-c11d36b5d07f)
