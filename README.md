@@ -1,7 +1,9 @@
 ![data angular thread-overview.png](frontend%2Ffiltro_jwt%2Fknowledge%2Fdata%20angular%20thread-overview.png)
 
 Source nguồn front-end: https://github.com/Arkadian404/filtro_jwt.git
+
 Source nguồn back-end: https://github.com/Arkadian404/filtro_jwt_backend.git
+
 Source nguồn fast-api: https://github.com/Arkadian404/recommender_system_api.git
 
 # Phân công
