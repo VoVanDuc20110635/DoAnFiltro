@@ -35,7 +35,7 @@ Source nguồn fast-api: https://github.com/Arkadian404/recommender_system_api.g
 - Xây dựng hàm
 
 #### Ôn Gia Phú
-- Xây dựng hàm (chính)
+- Xây dựng hàm
 - Xây dựng UI/UX
 
 ### Chatbot AI với Model LLM của Open AI
@@ -46,7 +46,7 @@ Source nguồn fast-api: https://github.com/Arkadian404/recommender_system_api.g
 - Xây dựng hàm
 
 #### Ôn Gia Phú
-- Xây dựng hàm (chính)
+- Xây dựng hàm
 - Xây dựng UI/UX
 
 ### Triển khai dự án sử dụng VPS, Docker Compose, Nginx
