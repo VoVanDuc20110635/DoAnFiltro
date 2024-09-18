@@ -1,4 +1,57 @@
-# Four Leaves Shoe - Project Overview
+![data angular thread-overview.png](frontend%2Ffiltro_jwt%2Fknowledge%2Fdata%20angular%20thread-overview.png)
+
+Source nguồn front-end: https://github.com/Arkadian404/filtro_jwt.git
+Source nguồn back-end: https://github.com/Arkadian404/filtro_jwt_backend.git
+Source nguồn fast-api: https://github.com/Arkadian404/recommender_system_api.git
+
+# Phân công
+### Giai đoạn 1: 07/2023 - 12/2023
+
+#### Võ Văn Đức (25-30%)
+- Xây dựng cấu trúc source code cho back-end Spring Boot (Model, Database) và front-end Angular
+- Cấu hình security cho back-end
+- Thực hiện chức năng trang home, cart, checkout, trang quản lý sản phẩm và hình ảnh sản phẩm
+- Thực hiện chức năng thanh toán Momo
+- Viết tài liệu
+
+#### Ôn Gia Phú (65-70%)
+- Thực hiện các chức năng quản lý các thông tin ở trang quản trị, thống kê
+- Thực hiện chức năng:
+  - Đăng nhập (giao diện), đăng ký, quên mật khẩu
+  - Xem, lọc danh sách sản phẩm; tìm kiếm sản phẩm; chi tiết sản phẩm; bình luận sản phẩm
+  - Sự kiện giảm giá; sử dụng API giao hàng nhanh
+- Thực hiện chức năng thanh toán Vnpay
+
+### Giai đoạn 2: 01/2024 - 07/2024
+
+### Hệ thống gợi ý sản phẩm dựa trên hành vi người dùng – thuật toán KNearest Neighbor KNN
+
+#### Võ Văn Đức
+- Tiền xử lý dữ liệu
+- Xác thực mô hình
+- Chọn K
+- Xây dựng hàm
+
+#### Ôn Gia Phú
+- Xây dựng hàm (chính)
+- Xây dựng UI/UX
+
+### Chatbot AI với Model LLM của Open AI
+
+#### Võ Văn Đức
+- Kiểm tra với Model LLM của Hugging Face
+- Viết Prompt cho Chatbot
+- Xây dựng hàm
+
+#### Ôn Gia Phú
+- Xây dựng hàm (chính)
+- Xây dựng UI/UX
+
+### Triển khai dự án sử dụng VPS, Docker Compose, Nginx
+
+
+
+# Filtro - Project Overview
 - URL: https://filtrocoffee.com/home
 - This project aims to replicate the functionality of an e-commerce website. It offers a comprehensive suite of features that cater to both customers and store managers.
   
@@ -91,9 +144,11 @@
 ![image](https://github.com/user-attachments/assets/51b3e2c6-7ce3-475c-b77e-94f81cc1e10f)
 
 - At the homepage of Momo's application
-![image](https://github.com/user-attachments/assets/49b73390-8173-45ea-891f-36e725b69b3a)
-![image](https://github.com/user-attachments/assets/1e2d6957-4edc-485a-b811-659ea7edd5df)
-![image](https://github.com/user-attachments/assets/2d5b2a7e-9263-4a59-b56e-42c8f63eb8ab)
+
+  <img src="https://github.com/user-attachments/assets/49b73390-8173-45ea-891f-36e725b69b3a" height="500">
+  <img src="https://github.com/user-attachments/assets/1e2d6957-4edc-485a-b811-659ea7edd5df" height="500">
+  <img src="https://github.com/user-attachments/assets/2d5b2a7e-9263-4a59-b56e-42c8f63eb8ab" height="500">
+
 
 - After check out successfully, the webpage is reset.
 ![image](https://github.com/user-attachments/assets/6a23578b-25bc-4ba2-9cef-8bc52989bc1e)
@@ -127,6 +182,7 @@ Here is the admin's account:
 ![image](https://github.com/user-attachments/assets/1d2bfdaa-2ecf-4d6f-b70e-bfac013c0c23)
 
 Here is the employe's account:
+
 ![image](https://github.com/user-attachments/assets/a9a55daf-2c7f-4479-976f-a4c73ef2db6e)
 
 After employee's account access the employee management page https://filtrocoffee.com/admin/employee, the website will return to the home page https://filtrocoffee.com/admin/home
@@ -143,9 +199,22 @@ After employee's account access the employee management page https://filtrocoffe
 ## 4. Recommender System.
 - If there are any confirmed orders in the user's account and the user hasn't commented on any product, the system suggests the 10 highest-rated products in the database.
 - If there is a confirmed order, the system suggests the 10 highest-rated products based on previous reviews from this account.
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
+
+![img_1.png](img_1.png)
+
 ![image](https://github.com/user-attachments/assets/1c3debf1-9b60-49b8-a4e9-0e5fa93a8124)
 
 ## 5. Chatbot AI.
-![image](https://github.com/user-attachments/assets/59a225cc-0925-4792-99ee-f571b11bbdff)
-![image](https://github.com/user-attachments/assets/521ff79e-0d24-4543-ac1a-df171884f792)
+![img.png](img.png)
 
+![image](https://github.com/user-attachments/assets/59a225cc-0925-4792-99ee-f571b11bbdff)
+
+<img src="https://github.com/user-attachments/assets/521ff79e-0d24-4543-ac1a-df171884f792" height="500">

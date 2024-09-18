@@ -651,12 +651,12 @@ server {
           # Keeps the connection between Nginx and the backend container open (Keep-Alive).
         proxy_set_header Upgrade $http_upgrade;
           # Enables WebSocket after keeping the connection alive.
-        proxy_set_header Connection 'upgrade';
-          # Notifies that the connection is upgraded.
         proxy_set_header Host $host;
           # Sets the new request's host header to match the original.
         proxy_cache_bypass $http_upgrade;
-          # Bypasses caching for upgraded connections (e.g., WebSocket).
+          # 
+        proxy_set_header Connection 'upgrade';
+          # proxy will create a new request based on the one from browser and set header for it. 
     }
 
     location ^~ /fastapi/ {
@@ -665,7 +665,8 @@ server {
         proxy_set_header Host $host;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $http_connection;
-          # Sets the connection header based on the request, since HTTPS (not WebSocket) is used for FastAPI, as it exchanges data with OpenAI Chat.
+          # That means request is not changed or created by proxy. This request will be directly sent to fast api 
+            # in order to keep it the same, since HTTPS (not WebSocket) is used for FastAPI, as it exchanges data with OpenAI Chat.
     }
 
     error_page 500 502 503 504 /50x.html;
