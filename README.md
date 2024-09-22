@@ -6,6 +6,10 @@ Source nguồn back-end: https://github.com/Arkadian404/filtro_jwt_backend.git
 
 Source nguồn fast-api: https://github.com/Arkadian404/recommender_system_api.git
 
+### ED diagram
+
+![database.png](database.png)
+
 # Phân công
 ### Giai đoạn 1: 07/2023 - 12/2023
 
