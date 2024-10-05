@@ -45,7 +45,6 @@ Source nguồn fast-api: https://github.com/Arkadian404/recommender_system_api.g
 ### Chatbot AI với Model LLM của Open AI
 
 #### Võ Văn Đức
-- Kiểm tra với Model LLM của Hugging Face
 - Viết Prompt cho Chatbot
 - Xây dựng hàm
 
